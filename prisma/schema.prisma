@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Alarm {
+  id          String    @id @default(cuid())
+  name        String
+  pair        String    // e.g., "SUI/USDC"
+  alarmType   AlarmType
+  condition   AlarmCondition
+  value       Float     // The threshold value
+  basePrice   Float?    // Base price for percentage calculations
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  history     AlarmHistory[]
+  
+  @@map("alarms")
+}
+
+model AlarmHistory {
+  id            String   @id @default(cuid())
+  alarmId       String
+  triggeredAt   DateTime @default(now())
+  currentPrice  Float
+  previousPrice Float?
+  message       String
+  
+  // Relations
+  alarm         Alarm    @relation(fields: [alarmId], references: [id], onDelete: Cascade)
+  
+  @@map("alarm_history")
+}
+
+model Settings {
+  id                   String  @id @default(cuid())
+  telegramChatId       String?
+  telegramBotToken     String?
+  checkInterval        Int     @default(60) // in seconds
+  notificationsEnabled Boolean @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  
+  @@map("settings")
+}
+
+enum AlarmType {
+  PERCENTAGE
+  ABSOLUTE
+}
+
+enum AlarmCondition {
+  ABOVE
+  BELOW
+}

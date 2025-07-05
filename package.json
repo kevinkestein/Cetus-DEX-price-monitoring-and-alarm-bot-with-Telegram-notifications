@@ -1,0 +1,55 @@
+{
+  "name": "cetus-dex-price-monitoring-and-alarm-bot-with-telegram-notifications",
+  "version": "1.0.0",
+  "description": "Cetus Alarm Bot",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "npm run db:generate && NODE_ENV=development concurrently -n \"WEBPACK,ELECTRON\" -c \"bgBlue.bold,bgGreen.bold\" \"webpack serve --config webpack.config.js --mode development\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "npm run db:generate && NODE_ENV=production webpack --config webpack.config.js --mode production",
+    "start": "npm run build && electron .",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinkestein/Cetus-DEX-price-monitoring-and-alarm-bot-with-Telegram-notifications.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevinkestein/Cetus-DEX-price-monitoring-and-alarm-bot-with-Telegram-notifications/issues"
+  },
+  "homepage": "https://github.com/kevinkestein/Cetus-DEX-price-monitoring-and-alarm-bot-with-Telegram-notifications#readme",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.0",
+    "css-loader": "^7.1.2",
+    "electron": "^37.2.0",
+    "electron-is-dev": "^3.0.1",
+    "html-webpack-plugin": "^5.6.3",
+    "nodemon": "^3.1.10",
+    "postcss": "^8.5.6",
+    "postcss-loader": "^8.1.1",
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^4.1.11",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "wait-on": "^8.0.3",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.11.1",
+    "prisma": "^6.11.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
